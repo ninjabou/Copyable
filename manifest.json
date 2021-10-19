@@ -8,18 +8,6 @@
     },
     "permissions": ["storage"],
     "action": {
-        "default_popup": "popup.html",
-        "default_icon": {
-            "16": "",
-            "32": "",
-            "48": "",
-            "128": ""
-        }
-    },
-    "icons": {
-        "16": "",
-        "48": "",
-        "32": "",
-        "128": ""
+        "default_popup": "popup.html"
     }
 }
