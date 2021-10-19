@@ -1,0 +1,6 @@
+{
+    "name": "Copyable",
+    "description": "A Chrome extension that makes text copyable.",
+    "version": "0.1",
+    "manifest_version": 3
+}
