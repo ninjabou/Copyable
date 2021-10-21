@@ -3,29 +3,54 @@
     <head>
     </head>
     <body>
-        <p style="margin-left: 10px; margin-bottom: 5px;">Whitelist:</p>
-        <div id="whitelist-box" contenteditable="true">
-            <p>Lorem Ipsum</p>
-        </div>
-        <div id="save-button">
-            <p style="text-align: center;"">save</p>
+        <div id="main">
+            <p style="margin-left: 10px; margin-bottom: 5px;">Whitelist:</p>
+            <div id="whitelist-box" contenteditable="true">
+                <p>Lorem Ipsum</p>
+            </div>
+            <form>
+                <input id="URL" type="text" placeholder="Website URL">
+            </form>
+            <div id="save-button" onclick="save_to_list()">
+                <p style="text-align: center;"">save</p>
+            </div>
         </div>
 
         <style>
             body{
                 width: 200px;
                 height: max-content;
-                padding: 20px;
                 margin: 0;
-                border:5px solid #000;
+                border: 3px solid #000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            #main{
+                margin: 20px;
+                height: max-content;
+                width: 160px;
             }
             #whitelist-box{
-                border:5px solid #000;
+                background-color: #ddd;
                 height: max-content;
                 padding: 5px;
+                overflow-x: scroll;
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+                margin-bottom: 10px;
+            }
+            #whitelist-box::-webkit-scrollbar {
+                display: none;
+            }
+            input{
+                border: 3px solid #000;
+                box-sizing: border-box;
+                padding: 5px;
+                width: 100%;
+                margin-bottom: 10px;
             }
             #save-button{
-                margin-top: 10px;
                 padding: 10px;
                 color: #fff;
                 background-color: #000;
@@ -42,5 +67,19 @@
                 user-select: none; /* Standard */
             }
         </style>
+
+        <script>
+            var data = JSON.parse(localStorage.getItem("copyable-data"));
+            
+            if(data["list"].length <= 0){
+                document.querySelectorAll("#whitelist-box > p").innerHTML = "Enter websites!"
+            }
+
+            function save_to_list(){
+                var input = document.getElementById("URL").value;
+                data["list"].push(input);
+                localStorage.setItem('copyable-data', JSON.stringify(data));
+            }
+        </script>
     </body>
 </html>
