@@ -5,9 +5,7 @@
     <body>
         <div id="main">
             <p style="margin-left: 10px; margin-bottom: 5px;">Whitelist:</p>
-            <div id="whitelist-box" contenteditable="true">
-                <p>Lorem Ipsum</p>
-            </div>
+            <div id="whitelist-box"><p></p></div>
             <form>
                 <input id="URL" type="text" placeholder="Website URL">
             </form>
@@ -39,6 +37,9 @@
                 -ms-overflow-style: none;  /* IE and Edge */
                 scrollbar-width: none;  /* Firefox */
                 margin-bottom: 10px;
+            }
+            #whitelist-box > p:empty::before{
+                content: "List empty";
             }
             #whitelist-box::-webkit-scrollbar {
                 display: none;
