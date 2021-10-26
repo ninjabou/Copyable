@@ -10,16 +10,16 @@
     "action": {
         "default_popup": "ui.html",
         "default_icon": {
-            "16": "16.png",
-            "32": "32.png",
-            "48": "48.png",
-            "128": "128.png"
+            "16": "CL16px.png",
+            "32": "CL32px.png",
+            "48": "CL48px.png",
+            "128": "CL128px.png"
         }
     },
     "icons": {
-        "16": "16.png",
-        "48": "48.png",
-        "32": "32.png",
-        "128": "128.png"
+        "16": "CL16px.png",
+        "48": "CL48px.png",
+        "32": "CL32px.png",
+        "128": "CL128px.png"
     }
 }
