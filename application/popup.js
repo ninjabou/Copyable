@@ -27,7 +27,10 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
     for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
         if(key == "copyable_data"){
             var whitelist_text = document.getElementById("whitelist-box");
-            whitelist_text.innerHTML = newValue;
+            whitelist_text.innerHTML = "";
+            for(var element in JSON.parse(newValue).list){
+                whitelist_text.innerHTML += "" + element + "\n"
+            }
         }
     }
 });
