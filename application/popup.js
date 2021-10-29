@@ -1,4 +1,5 @@
 var default_value = JSON.stringify({"list":[]});
+
 chrome.storage.sync.get({copyable_data: default_value}, function(data) {
   // data.copyable_data will be either the stored value, or default_value if nothing is set
   chrome.storage.sync.set({copyable_data: data.copyable_data}, function() {
