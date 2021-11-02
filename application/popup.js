@@ -1,4 +1,4 @@
-import { user_select_all } from "../core/core.js"
+import { user_select_auto, pointer_events_auto } from "../core/core.js"
 var default_value = JSON.stringify({"list":[]});
 
 chrome.storage.sync.get({copyable_data: default_value}, function(data) {
@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }, false);
     test_button.addEventListener('click', function(){
-        user_select_all();
+        user_select_auto();
+        pointer_events_auto();
     }, false);
 }, false);
 
