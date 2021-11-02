@@ -1,3 +1,4 @@
+import { user_select_all } from "../core/core.js"
 var default_value = JSON.stringify({"list":[]});
 
 chrome.storage.sync.get({copyable_data: default_value}, function(data) {
@@ -11,6 +12,7 @@ chrome.storage.sync.get({copyable_data: default_value}, function(data) {
 document.addEventListener('DOMContentLoaded', function(){
     var add_button = document.getElementById('save-button');
     var input_URL = document.getElementById('URL');
+    var test_button = document.getElementById('test-button');
 
     add_button.addEventListener('click', function(){
         if(input_URL.value.length > 0){
@@ -20,6 +22,9 @@ document.addEventListener('DOMContentLoaded', function(){
                 chrome.storage.sync.set({copyable_data: JSON.stringify(data)}, function(){});
             });
         }
+    }, false);
+    test_button.addEventListener('click', function(){
+        user_select_all();
     }, false);
 }, false);
 

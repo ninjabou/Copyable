@@ -3,7 +3,7 @@
     <head>
     </head>
     <body>
-        <script src="../application/popup.js"></script>
+        <script src="../application/popup.js" type="module"></script>
 
         <div id="main">
             <p style="margin-left: 10px; margin-bottom: 5px;">Whitelist:</p>
@@ -11,8 +11,11 @@
             <form>
                 <input id="URL" type="text" placeholder="Website URL">
             </form>
-            <div id="save-button">
+            <div id="save-button" class="button">
                 <p style="text-align: center;">add</p>
+            </div>
+            <div id="test-button" class="button" style="margin-top: 10px;">
+                <p style="text-align: center;">test</p>
             </div>
         </div>
 
@@ -60,7 +63,7 @@
                 width: 100%;
                 margin-bottom: 10px;
             }
-            #save-button{
+            .button{
                 padding: 10px;
                 color: #fff;
                 background-color: #000;
