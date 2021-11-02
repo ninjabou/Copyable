@@ -2,7 +2,7 @@
 // If this *does* work, then all it does is inject user select styles into every div.
 // We may need to do this for other tags like <p>.
 export function user_select_all(){
-    var CSSInjection = "div{ user-select: all; } p{ user-select: all; }"
+    var CSSInjection = "p{ user-select: auto !important; }"
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.scripting.insertCSS({
             target: { tabId: tabs[0].id },
