@@ -16,6 +16,14 @@ chrome.storage.sync.get({ copyable_data: default_value }, function (data) {
             });
         }
 
+        var remove_buttons = document.getElementsByClassName('whitelist-item');
+
+        for (var i = 0; i < remove_buttons.length; i++) {
+            remove_buttons[i].addEventListener('click', function (event) {
+                alert(event.target.innerHTML);            
+            })
+        }
+
         // whitelist_text.innerHTML = 
         // console.log(whitelist_text);
     });
@@ -25,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var add_button = document.getElementById('save-button');
     var input_URL = document.getElementById('URL');
     var test_button = document.getElementById('test-button');
+
 
     add_button.addEventListener('click', function () {
         if (input_URL.value.length > 0) {
@@ -40,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
         user_select_auto();
         pointer_events_auto();
     }, false);
+
 
 }, false);
 
