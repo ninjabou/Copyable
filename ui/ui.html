@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+        <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     </head>
     <body>
         <script src="../application/popup.js" type="module"></script>
 
         <div id="main">
             <p style="margin-left: 10px; margin-bottom: 5px;">Whitelist:</p>
-            <div id="whitelist-box"><p></p></div>
+            <div id="whitelist-box"></div>
             <form>
                 <input id="URL" type="text" placeholder="Website URL">
             </form>
@@ -78,6 +80,16 @@
                 -moz-user-select: none; /* Firefox */
                 -ms-user-select: none; /* IE10+/Edge */
                 user-select: none; /* Standard */
+            }
+            .whitelist-item {
+                display: flex;
+                justify-content: space-between;
+            }
+            .whitelist-item:hover {
+                color: red;
+            }
+            .remove-button {
+                color: red;
             }
         </style>
     </body>
