@@ -2,7 +2,7 @@ import { user_select_auto, pointer_events_auto } from "../core/core.js"
 var default_value = JSON.stringify({ "list": [] });
 
 chrome.storage.sync.get({ copyable_data: default_value }, function (data) {
-    // data.copyable_data will be either the stored value, or default_value if nothing is set
+    // data.copyable_data will be either the stored value, or default_value if nothing is set 
     chrome.storage.sync.set({ copyable_data: data.copyable_data }, function () {
         var whitelist_text = document.getElementById("whitelist-box");
         var whitelist_elements = JSON.parse(data.copyable_data).list;
@@ -74,7 +74,6 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
         }
     }
 });
-
 
 function removeItem(item, array) {
     for (var i = 0; i < array.length; i++) {
