@@ -20,9 +20,19 @@ chrome.storage.sync.get({ copyable_data: default_value }, function (data) {
 
         for (var i = 0; i < remove_buttons.length; i++) {
             remove_buttons[i].addEventListener('click', function (event) {
-                alert(event.target.innerHTML);            
-            })
+                var domain = event.target.innerText.split('×')[0];
+                alert(domain);
+
+                chrome.storage.sync.get(['copyable_data'], function (result) {
+                    var data = JSON.parse(result.copyable_data);
+                    // data.list.push(input_URL.value);
+                    removeItem(domain, data.list);
+                    chrome.storage.sync.set({ copyable_data: JSON.stringify(data) }, function () { });
+                });
+            });
         }
+
+
 
         // whitelist_text.innerHTML = 
         // console.log(whitelist_text);
@@ -64,3 +74,12 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
         }
     }
 });
+
+
+function removeItem(item, array) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i] === item) {
+            array.splice(i, 1);
+        }
+    }
+}
