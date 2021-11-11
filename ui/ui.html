@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-        <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <!-- I am not sure why, but these links break the styling of the input field, and margins for the body tag. -->
+        <!-- I've gone ahead and removed them and just styled the text how these scripts did. - Devin -->
+
+        <!-- <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+        <!-- <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"> -->
     </head>
     <body>
         <script src="../application/popup.js" type="module"></script>
@@ -14,10 +17,10 @@
                 <input id="URL" type="text" placeholder="Website URL">
             </form>
             <div id="save-button" class="button">
-                <p style="text-align: center;">add</p>
+                <p style="text-align: center;">Add</p>
             </div>
             <div id="test-button" class="button" style="margin-top: 10px;">
-                <p style="text-align: center;">test</p>
+                <p style="text-align: center;">Activate</p>
             </div>
         </div>
 
@@ -37,6 +40,7 @@
                 width: 160px;
             }
             #whitelist-box{
+                line-height: 1.6em;
                 background-color: #ddd;
                 height: max-content;
                 padding: 5px;
@@ -58,7 +62,7 @@
             #whitelist-box::-webkit-scrollbar {
                 display: none;
             }
-            input{
+            input[type='text']{
                 border: 3px solid #000;
                 box-sizing: border-box;
                 padding: 5px;
@@ -88,9 +92,9 @@
             .whitelist-item:hover {
                 color: red;
             }
-            .remove-button {
+            /* .remove-button {
                 color: red;
-            }
+            } */
         </style>
     </body>
 </html>

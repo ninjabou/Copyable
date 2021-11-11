@@ -14,7 +14,15 @@ function addListItems(items) {
     } else {
         whitelist_text.innerHTML = '';
         items.map(elem => {
-            whitelist_text.innerHTML += `<p class='whitelist-item'>${elem}<span class='remove-button'>×</span></p>`
+            whitelist_text.innerHTML += `<div class='whitelist-item'><p>${elem}</p><span>×</span></div>`
+        });
+    }
+
+    var remove_buttons = document.getElementsByClassName('whitelist-item');
+
+    for (var i = 0; i < remove_buttons.length; i++) {
+        remove_buttons[i].addEventListener('click', function (event) {
+            updateWhitelist(true, event)
         });
     }
 }
@@ -51,6 +59,9 @@ function updateWhitelist(is_remove, event) {
         }
 
         chrome.storage.sync.set({ copyable_data: JSON.stringify(data) }, function () { });
+        
+        var input_field = document.getElementById('URL');
+        input_field.value = "";
     });
 }
 
@@ -61,23 +72,13 @@ chrome.storage.sync.get({ copyable_data: default_value }, function (data) {
         var whitelist_elements = JSON.parse(data.copyable_data).list;
 
         addListItems(whitelist_elements);
-
-        var remove_buttons = document.getElementsByClassName('whitelist-item');
-
-        for (var i = 0; i < remove_buttons.length; i++) {
-            remove_buttons[i].addEventListener('click', function (event) {
-                updateWhitelist(true, event)
-            });
-        }
-
-        // whitelist_text.innerHTML = 
-        // console.log(whitelist_text);
     });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
     var add_button = document.getElementById('save-button');
     var test_button = document.getElementById('test-button');
+    var input_field = document.getElementById('URL');
 
     add_button.addEventListener('click', function (event) {
         updateWhitelist(false, event);
@@ -87,6 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
         user_select_auto();
         pointer_events_auto();
     }, false);
+
+    input_field.addEventListener('keypress', function(event) {
+        if(event.key === 'Enter'){
+            updateWhitelist(false, event);
+        }
+    });
 
 
 }, false);
