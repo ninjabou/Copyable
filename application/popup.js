@@ -28,6 +28,26 @@ function addListItems(items) {
 }
 
 /*
+    Validate that a given string is a proper URL. If the string
+    does not include http:// or https://, then it will be added *before* testing.
+*/
+function validateUrl(str){
+    if(str.length > 0){
+        if(str.substring(0,7) !== "http://" && str.substring(0,8) !== "https://"){
+            str = "https://" + str;
+        }
+    }
+
+    let url;
+    try {
+        url = new URL(str);
+    } catch (_) {
+        return false;
+    }
+    return url.protocol === "http:" || url.protocol === "https:";
+}
+
+/*
     Helper function to remove the given item from the given array.
     Returns a new array.
 */
