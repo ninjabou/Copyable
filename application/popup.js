@@ -9,17 +9,21 @@ var default_value = JSON.stringify({ "list": [] });
 function addListItems(items) {
     var whitelist_text = document.getElementById("whitelist-box");
 
+    // If the input field empty, don't do anything.
     if (items == null || items.length == 0) {
         whitelist_text.innerHTML = '<p></p>'
     } else {
         whitelist_text.innerHTML = '';
+        // For each element in the whitelist, add a new div and the domain.
         items.map(elem => {
             whitelist_text.innerHTML += `<div class='whitelist-item'><p>${elem}</p><span>×</span></div>`
         });
     }
 
+    // Get all X icons located at the end of the whitelist box.
     var remove_buttons = document.getElementsByClassName('whitelist-item');
 
+    // Add event listeners to the remove buttons.
     for (var i = 0; i < remove_buttons.length; i++) {
         remove_buttons[i].addEventListener('click', function (event) {
             updateWhitelist(true, event)
@@ -43,29 +47,48 @@ function removeItem(item, array) {
     return newArr;
 }
 
+/* 
+    Helper function to check if the given domain exists in the whitelist and
+    add to the whitelist if not. 
+*/
+function addDomain(domain, whitelist) {
+    // Check if the domain is not an empty string and if it already exists in the whitelist.
+    if (domain.length > 0 && !whitelist.includes(domain)) {
+        whitelist.push(domain);
+    }
+}
 
+/*
+    This function removes/adds a new element to the whitelist
+    and updates the front-end accordingly.
+*/
 function updateWhitelist(is_remove, event) {
     chrome.storage.sync.get(['copyable_data'], function (result) {
         var data = JSON.parse(result.copyable_data);
 
         if (is_remove) {
+            // If this function is called on removal of an item, remove domain from list.
             var domain = event.target.innerText.split('×')[0];
             data.list = removeItem(domain, data.list);
         } else {
+            // If it is an add operation, add domain to the list.
             var input_URL = document.getElementById('URL');
-            if (input_URL.value.length > 0) {
-                data.list.push(input_URL.value);
-            }
+            addDomain(input_URL.value, data.list)
         }
 
+        // Update chrome local storage with the updated list.
         chrome.storage.sync.set({ copyable_data: JSON.stringify(data) }, function () { });
         
+        // Reset the input field.
         var input_field = document.getElementById('URL');
         input_field.value = "";
     });
 }
 
-
+/*
+    This function runs when the extension is opened. It gets the whitelist data from
+    the chrome local storage and updates the front-end with the existing whitelist.
+*/
 chrome.storage.sync.get({ copyable_data: default_value }, function (data) {
     // data.copyable_data will be either the stored value, or default_value if nothing is set 
     chrome.storage.sync.set({ copyable_data: data.copyable_data }, function () {
@@ -75,6 +98,10 @@ chrome.storage.sync.get({ copyable_data: default_value }, function (data) {
     });
 });
 
+/*
+    Runs on extension loaded. Adds event handlers to buttons and the input 
+    field on the extension.
+*/
 document.addEventListener('DOMContentLoaded', function () {
     var add_button = document.getElementById('save-button');
     var test_button = document.getElementById('test-button');
@@ -89,15 +116,18 @@ document.addEventListener('DOMContentLoaded', function () {
         pointer_events_auto();
     }, false);
 
+    // Users can press enter instead of clicking add button to submit domain.
     input_field.addEventListener('keypress', function(event) {
         if(event.key === 'Enter'){
             updateWhitelist(false, event);
         }
     });
-
-
 }, false);
 
+
+/*
+    Update the UI whenever an item is added/removed from the whitelist.
+*/
 chrome.storage.onChanged.addListener(function (changes, namespace) {
     for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
         if (key == "copyable_data") {
