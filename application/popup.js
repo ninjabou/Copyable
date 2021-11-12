@@ -1,4 +1,5 @@
-import { user_select_auto, pointer_events_auto } from "../core/core.js"
+// import { user_select_auto, pointer_events_auto } from "../core/core.js"
+const core = require('../core/core');
 
 var default_value = JSON.stringify({ "list": [] });
 
@@ -35,9 +36,9 @@ function addListItems(items) {
     Validate that a given string is a proper URL. If the string
     does not include http:// or https://, then it will be added *before* testing.
 */
-function validateUrl(str){
-    if(str.length > 0){
-        if(str.substring(0,7) !== "http://" && str.substring(0,8) !== "https://"){
+function validateUrl(str) {
+    if (str.length > 0) {
+        if (str.substring(0, 7) !== "http://" && str.substring(0, 8) !== "https://") {
             str = "https://" + str;
         }
     }
@@ -98,25 +99,13 @@ function updateWhitelist(is_remove, event) {
 
         // Update chrome local storage with the updated list.
         chrome.storage.sync.set({ copyable_data: JSON.stringify(data) }, function () { });
-        
+
         // Reset the input field.
         var input_field = document.getElementById('URL');
         input_field.value = "";
     });
 }
 
-/*
-    This function runs when the extension is opened. It gets the whitelist data from
-    the chrome local storage and updates the front-end with the existing whitelist.
-*/
-chrome.storage.sync.get({ copyable_data: default_value }, function (data) {
-    // data.copyable_data will be either the stored value, or default_value if nothing is set 
-    chrome.storage.sync.set({ copyable_data: data.copyable_data }, function () {
-        var whitelist_elements = JSON.parse(data.copyable_data).list;
-
-        addListItems(whitelist_elements);
-    });
-});
 
 /*
     Runs on extension loaded. Adds event handlers to buttons and the input 
@@ -132,27 +121,47 @@ document.addEventListener('DOMContentLoaded', function () {
     }, false);
 
     test_button.addEventListener('click', function () {
-        user_select_auto();
-        pointer_events_auto();
+        core.user_select_auto();
+        core.pointer_events_auto();
     }, false);
 
     // Users can press enter instead of clicking add button to submit domain.
-    input_field.addEventListener('keypress', function(event) {
-        if(event.key === 'Enter'){
+    input_field.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
             updateWhitelist(false, event);
         }
     });
 }, false);
 
 
-/*
-    Update the UI whenever an item is added/removed from the whitelist.
+if (typeof module !== 'undefined' && !module.parent) {
+    /*
+    This function runs when the extension is opened. It gets the whitelist data from
+    the chrome local storage and updates the front-end with the existing whitelist.
 */
-chrome.storage.onChanged.addListener(function (changes, namespace) {
-    for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-        if (key == "copyable_data") {
-            var list = JSON.parse(newValue).list;
-            addListItems(list);
+    chrome.storage.sync.get({ copyable_data: default_value }, function (data) {
+        // data.copyable_data will be either the stored value, or default_value if nothing is set 
+        chrome.storage.sync.set({ copyable_data: data.copyable_data }, function () {
+            var whitelist_elements = JSON.parse(data.copyable_data).list;
+
+            addListItems(whitelist_elements);
+        });
+    });
+
+    /*
+        Update the UI whenever an item is added/removed from the whitelist.
+    */
+    chrome.storage.onChanged.addListener(function (changes, namespace) {
+        for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
+            if (key == "copyable_data") {
+                var list = JSON.parse(newValue).list;
+                addListItems(list);
+            }
         }
-    }
-});
+    });
+}
+
+
+module.exports = {
+    addDomain, removeItem
+}

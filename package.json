@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "jest": "^27.3.1"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "name": "copyable",
+  "description": "A Chrome extension that makes text copyable.",
+  "version": "1.0.0",
+  "main": "background.js",
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ninjabou/Copyable.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ninjabou/Copyable/issues"
+  },
+  "homepage": "https://github.com/ninjabou/Copyable#readme"
+}
