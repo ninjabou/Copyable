@@ -10,6 +10,9 @@ chrome.tabs.onUpdated.addListener(function (tabId , info, tab) {
     }
 });
 
+/*
+    Needed to be copied from core.js unfortunately. Would be nice to not need this if there's time.
+*/
 function user_select_auto(){
     var CSSInjection = "*{ user-select: auto !important; }"
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
