@@ -1,5 +1,5 @@
-// import { user_select_auto, pointer_events_auto } from "../core/core.js"
-const core = require('../core/core');
+import { user_select_auto, pointer_events_auto } from "../core/core.js"
+// const core = require('../core/core');
 
 var default_value = JSON.stringify({ "list": [] });
 
@@ -10,25 +10,19 @@ var default_value = JSON.stringify({ "list": [] });
     Returns the number of elements added.
 */
 function addListItems(items) {
-    if (typeof module !== 'undefined' && !module.parent) {
-        var whitelist_text = document.getElementById("whitelist-box");
-    }
+    var whitelist_text = document.getElementById("whitelist-box");
 
     // If the input field empty, don't do anything.
     if (items == null || items.length == 0) {
-        if (typeof module !== 'undefined' && !module.parent) {
-            whitelist_text.innerHTML = '<p></p>';
-        }
+        whitelist_text.innerHTML = '<p></p>';
         return items;
     } else {
-        if (typeof module !== 'undefined' && !module.parent) {
-            whitelist_text.innerHTML = '';
+        whitelist_text.innerHTML = '';
 
-            // For each element in the whitelist, add a new div and the domain.
-            items.map(elem => {
-                whitelist_text.innerHTML += `<div class='whitelist-item'><p>${elem}</p><span>×</span></div>`
-            });
-        }
+        // For each element in the whitelist, add a new div and the domain.
+        items.map(elem => {
+            whitelist_text.innerHTML += `<div class='whitelist-item'><p>${elem}</p><span>×</span></div>`
+        });
     }
 
     // Get all X icons located at the end of the whitelist box.
@@ -139,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }, false);
 
     current_button.addEventListener('click', function () {
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             input_field.value = tabs[0].url;
             updateWhitelist(false, event);
         });
@@ -154,34 +148,32 @@ document.addEventListener('DOMContentLoaded', function () {
 }, false);
 
 
-if (typeof module !== 'undefined' && !module.parent) {
-    /*
-    This function runs when the extension is opened. It gets the whitelist data from
-    the chrome local storage and updates the front-end with the existing whitelist.
+/*
+This function runs when the extension is opened. It gets the whitelist data from
+the chrome local storage and updates the front-end with the existing whitelist.
 */
-    chrome.storage.sync.get({ copyable_data: default_value }, function (data) {
-        // data.copyable_data will be either the stored value, or default_value if nothing is set 
-        chrome.storage.sync.set({ copyable_data: data.copyable_data }, function () {
-            var whitelist_elements = JSON.parse(data.copyable_data).list;
+chrome.storage.sync.get({ copyable_data: default_value }, function (data) {
+    // data.copyable_data will be either the stored value, or default_value if nothing is set 
+    chrome.storage.sync.set({ copyable_data: data.copyable_data }, function () {
+        var whitelist_elements = JSON.parse(data.copyable_data).list;
 
-            addListItems(whitelist_elements);
-        });
+        addListItems(whitelist_elements);
     });
+});
 
-    /*
-        Update the UI whenever an item is added/removed from the whitelist.
-    */
-    chrome.storage.onChanged.addListener(function (changes, namespace) {
-        for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-            if (key == "copyable_data") {
-                var list = JSON.parse(newValue).list;
-                addListItems(list);
-            }
+/*
+    Update the UI whenever an item is added/removed from the whitelist.
+*/
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+    for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
+        if (key == "copyable_data") {
+            var list = JSON.parse(newValue).list;
+            addListItems(list);
         }
-    });
-}
+    }
+});
 
 
-module.exports = {
-    addDomain, removeItem, addListItems, validateUrl
-}
+// module.exports = {
+//     addDomain, removeItem, addListItems, validateUrl
+// }
