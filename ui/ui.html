@@ -13,14 +13,19 @@
         <div id="main">
             <p style="margin-left: 10px; margin-bottom: 5px;">Whitelist:</p>
             <div id="whitelist-box"></div>
-            <form>
-                <input id="URL" type="text" placeholder="Website URL">
-            </form>
-            <div id="save-button" class="button">
-                <p style="text-align: center;">Add</p>
+            <div style="display: flex; flex-direction: row; height: 30px;">
+                <form style="flex: 5">
+                    <input id="URL" type="text" placeholder="Website URL">
+                </form>
+                <div id="save-button" class="button" style="box-sizing: border-box; flex: 1; padding: 5px; margin-left: 5px; height: 100%;">
+                    <p style="text-align: center;">+</p>
+                </div>
+            </div>
+            <div id="add-current-button" class="button" style="margin-top: 10px;">
+                <p style="text-align: center;">Add Current</p>
             </div>
             <div id="test-button" class="button" style="margin-top: 10px;">
-                <p style="text-align: center;">Activate</p>
+                <p style="text-align: center;">Make Copyable!</p>
             </div>
         </div>
 
@@ -67,7 +72,7 @@
                 box-sizing: border-box;
                 padding: 5px;
                 width: 100%;
-                margin-bottom: 10px;
+                height: 100%;
             }
             .button{
                 padding: 10px;

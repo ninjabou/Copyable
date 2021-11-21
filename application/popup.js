@@ -114,6 +114,7 @@ function updateWhitelist(is_remove, event) {
 document.addEventListener('DOMContentLoaded', function () {
     var add_button = document.getElementById('save-button');
     var test_button = document.getElementById('test-button');
+    var current_button = document.getElementById('add-current-button');
     var input_field = document.getElementById('URL');
 
     add_button.addEventListener('click', function (event) {
@@ -123,6 +124,13 @@ document.addEventListener('DOMContentLoaded', function () {
     test_button.addEventListener('click', function () {
         core.user_select_auto();
         core.pointer_events_auto();
+    }, false);
+
+    current_button.addEventListener('click', function () {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            input_field.value = tabs[0].url;
+            updateWhitelist(false, event);
+        });
     }, false);
 
     // Users can press enter instead of clicking add button to submit domain.

@@ -9,7 +9,7 @@ function user_select_auto(){
             css: CSSInjection
         });
     });
-} // https://developer.chrome.com/docs/extensions/reference/scripting/#method-insertCSS
+}
 
 function pointer_events_auto(){
     var CSSInjection = "*{ pointer-events: auto !important; }"
