@@ -6,19 +6,29 @@ var default_value = JSON.stringify({ "list": [] });
 /*
     For each element in items, add element as a new paragraph tag
     to the given HTML element.
+
+    Returns the number of elements added.
 */
 function addListItems(items) {
-    var whitelist_text = document.getElementById("whitelist-box");
+    if (typeof module !== 'undefined' && !module.parent) {
+        var whitelist_text = document.getElementById("whitelist-box");
+    }
 
     // If the input field empty, don't do anything.
     if (items == null || items.length == 0) {
-        whitelist_text.innerHTML = '<p></p>'
+        if (typeof module !== 'undefined' && !module.parent) {
+            whitelist_text.innerHTML = '<p></p>';
+        }
+        return items;
     } else {
-        whitelist_text.innerHTML = '';
-        // For each element in the whitelist, add a new div and the domain.
-        items.map(elem => {
-            whitelist_text.innerHTML += `<div class='whitelist-item'><p>${elem}</p><span>×</span></div>`
-        });
+        if (typeof module !== 'undefined' && !module.parent) {
+            whitelist_text.innerHTML = '';
+
+            // For each element in the whitelist, add a new div and the domain.
+            items.map(elem => {
+                whitelist_text.innerHTML += `<div class='whitelist-item'><p>${elem}</p><span>×</span></div>`
+            });
+        }
     }
 
     // Get all X icons located at the end of the whitelist box.
@@ -30,6 +40,8 @@ function addListItems(items) {
             updateWhitelist(true, event)
         });
     }
+
+    return items;
 }
 
 /*
@@ -171,5 +183,5 @@ if (typeof module !== 'undefined' && !module.parent) {
 
 
 module.exports = {
-    addDomain, removeItem
+    addDomain, removeItem, addListItems, validateUrl
 }
