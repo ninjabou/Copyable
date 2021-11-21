@@ -128,8 +128,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }, false);
 
     test_button.addEventListener('click', function () {
-        core.user_select_auto();
-        core.pointer_events_auto();
+        user_select_auto();
+        pointer_events_auto();
     }, false);
 
     current_button.addEventListener('click', function () {
